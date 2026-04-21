@@ -118,7 +118,30 @@
                 <p class="mb-4" style="font-size:.8rem; color:#555">
                     {{ $pelicula->stock > 0 ? "✅ {$pelicula->stock} unidades en stock" : '❌ Sin stock' }}
                 </p>
-
+                    {{-- Trailer --}}
+                    @if($pelicula->trailer_url)
+                    @php
+                        $url = $pelicula->trailer_url;
+                        // Extrae el ID de YouTube sea cual sea el formato de la URL
+                        preg_match('/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $url, $m);
+                        $videoId = $m[1] ?? null;
+                    @endphp
+                    @if($videoId)
+                    <div class="mt-4" style="max-width:480px">
+                        <h6 class="text-secondary text-uppercase mb-3" style="font-size:.75rem; letter-spacing:1px">
+                            <i class="bi bi-play-circle me-1"></i>Trailer
+                        </h6>
+                        <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:10px; border:1px solid var(--cine-borde)">
+                            <iframe
+                                src="https://www.youtube.com/embed/{{ $videoId }}"
+                                style="position:absolute; top:0; left:0; width:100%; height:100%; border:0"
+                                allowfullscreen
+                                loading="lazy">
+                            </iframe>
+                        </div>
+                    </div>
+                    @endif
+                    @endif
                 {{-- ══ ACCIONES CRUD ══ --}}
                 <div class="d-flex flex-wrap gap-2 pt-3" style="border-top:1px solid var(--cine-borde)">
                     <a href="{{ route('peliculas.edit', $pelicula) }}"

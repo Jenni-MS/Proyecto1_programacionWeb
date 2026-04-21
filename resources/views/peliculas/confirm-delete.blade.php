@@ -50,7 +50,7 @@
         <i class="bi bi-exclamation-triangle me-2"></i>
         <strong>¿Está seguro?</strong> Esta película será eliminada del catálogo.
         Si la categoría <strong>{{ $pelicula->categoria->nombre }}</strong> tenía solo esta película,
-        aparecerá vacía. La acción puede deshacerse desde la base de datos (soft delete).
+        aparecerá vacía.
     </div>
 
     <div class="d-flex gap-3 justify-content-center">
