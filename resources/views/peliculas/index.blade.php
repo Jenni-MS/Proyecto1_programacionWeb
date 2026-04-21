@@ -4,7 +4,21 @@
 @section('contenido')
 <div class="container py-5">
 
-    <h1 class="seccion-titulo"><i class="bi bi-camera-reels me-2"></i>Catálogo de Películas</h1>
+    {{-- Mensaje de éxito --}}
+    @if(session('exito'))
+    <div class="alert alert-success alert-dismissible fade show mb-4" role="alert"
+         style="background:rgba(25,135,84,.15); border-color:rgba(25,135,84,.4); color:#75b798">
+        <i class="bi bi-check-circle me-2"></i>{{ session('exito') }}
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+    </div>
+    @endif
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="seccion-titulo mb-0"><i class="bi bi-camera-reels me-2"></i>Catálogo de Películas</h1>
+        <a href="{{ route('peliculas.create') }}" class="btn btn-danger">
+            <i class="bi bi-plus-circle me-1"></i>Agregar película
+        </a>
+    </div>
 
     <div class="row g-4">
 

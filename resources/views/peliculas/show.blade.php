@@ -3,6 +3,15 @@
 
 @section('contenido')
 
+{{-- Mensaje de éxito --}}
+@if(session('exito'))
+<div class="alert alert-success alert-dismissible fade show mb-0 rounded-0" role="alert"
+     style="background:rgba(25,135,84,.15); border-color:rgba(25,135,84,.4); color:#75b798">
+    <i class="bi bi-check-circle me-2"></i>{{ session('exito') }}
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+</div>
+@endif
+
 {{-- ══ DETALLE HERO ══ --}}
 <div class="py-5" style="background: linear-gradient(to right, var(--cine-oscuro) 50%, #1a0510)">
     <div class="container">
@@ -31,7 +40,10 @@
                 <div class="d-flex flex-wrap gap-2 mb-3">
                     <span class="badge bg-secondary">{{ $pelicula->formato }}</span>
                     <span class="badge bg-secondary">{{ $pelicula->clasificacion }}</span>
-                    <span class="badge bg-danger">{{ $pelicula->categoria->nombre }}</span>
+                    <span class="badge bg-danger">
+                        <a href="{{ route('categorias.show', $pelicula->categoria->slug) }}"
+                           class="text-white text-decoration-none">{{ $pelicula->categoria->nombre }}</a>
+                    </span>
                     @foreach($pelicula->generos as $genero)
                     <span class="badge" style="background-color: var(--cine-borde); color:#aaa">
                         {{ $genero->nombre }}
@@ -77,7 +89,6 @@
                     {{ $pelicula->sinopsis ?? $pelicula->descripcion }}
                 </p>
 
-                {{-- Idiomas --}}
                 @if($pelicula->idiomas_disponibles)
                 <p class="text-secondary mb-4" style="font-size:.85rem">
                     <span class="text-white">Idiomas:</span>
@@ -91,7 +102,7 @@
                 @endif
 
                 {{-- Precio --}}
-                <div class="d-flex flex-wrap align-items-center gap-3">
+                <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
                     <div>
                         <span class="text-danger fw-bold" style="font-size:2rem">
                             {{ $pelicula->precio_formateado }}
@@ -102,12 +113,31 @@
                         </span>
                         @endif
                     </div>
-
                 </div>
 
-                <p class="mt-3" style="font-size:.8rem; color:#555">
+                <p class="mb-4" style="font-size:.8rem; color:#555">
                     {{ $pelicula->stock > 0 ? "✅ {$pelicula->stock} unidades en stock" : '❌ Sin stock' }}
                 </p>
+
+                {{-- ══ ACCIONES CRUD ══ --}}
+                <div class="d-flex flex-wrap gap-2 pt-3" style="border-top:1px solid var(--cine-borde)">
+                    <a href="{{ route('peliculas.edit', $pelicula) }}"
+                       class="btn btn-sm btn-outline-warning">
+                        <i class="bi bi-pencil-square me-1"></i>Editar película
+                    </a>
+                    <a href="{{ route('peliculas.confirm-delete', $pelicula) }}"
+                       class="btn btn-sm btn-outline-danger">
+                        <i class="bi bi-trash me-1"></i>Eliminar película
+                    </a>
+                    <a href="{{ route('peliculas.create') }}"
+                       class="btn btn-sm btn-outline-light">
+                        <i class="bi bi-plus-circle me-1"></i>Agregar película
+                    </a>
+                    <a href="{{ route('peliculas.index') }}"
+                       class="btn btn-sm btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-1"></i>Volver al catálogo
+                    </a>
+                </div>
             </div>
         </div>
     </div>
